@@ -1,11 +1,12 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// Removed unused import
 import { Check, Crown, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
+// Removed unused import
 
 // Load Stripe
-const stripePromise = loadStripe('your-publishable-key-here');
+const stripePromise = loadStripe('STRIPE_SECRET_KEY');
 
 const PricingPage = () => {
   const dealerPlans = [
