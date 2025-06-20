@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Car, Upload, Camera, MessageCircle, CreditCard, Star } from 'lucide-react';
+import { useState } from 'react';
+import { Car, Upload, Camera, Star } from 'lucide-react';
 
 const UserDashboard = () => {
   const [activeTab, setActiveTab] = useState('profile');
 
-  const TabButton = ({ id, label, isActive, onClick }: { id: string; label: string; isActive: boolean; onClick: () => void }) => (
+  const TabButton = ({ label, isActive, onClick }: { id: string; label: string; isActive: boolean; onClick: () => void }) => (
     <button
       onClick={onClick}
       className={`px-4 py-2 rounded-lg font-medium transition-colors duration-200 ${
