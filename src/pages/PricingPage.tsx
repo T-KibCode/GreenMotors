@@ -1,7 +1,7 @@
-import React from 'react';
+// Removed unused import
 import { Check, Crown, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
+// Removed unused import
 const PricingPage = () => {
   const dealerPlans = [
     {
@@ -71,23 +71,6 @@ const PricingPage = () => {
     },
   ];
 
-  const additionalServices = [
-    {
-      name: 'Premium Listing Boost',
-      price: '£25',
-      description: 'Push your listing to the top for 7 days',
-    },
-    {
-      name: 'Professional Photography',
-      price: '£75',
-      description: 'On-site professional car photography service',
-    },
-    {
-      name: 'Extended Listing',
-      price: '£10',
-      description: 'Extend individual listing by 30 days',
-    },
-  ];
 
   return (
     <div className="bg-gray-50 min-h-screen">
