@@ -8,6 +8,9 @@ import UserDashboard from './pages/UserDashboard';
 import MessagingPage from './pages/MessagingPage';
 import PricingPage from './pages/PricingPage';
 import Footer from './components/Footer';
+import { useState, useEffect } from 'react'
+import { supabase } from '../utils/supabase'
+
 
 function App() {
   return (
