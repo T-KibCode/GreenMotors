@@ -1,8 +1,13 @@
-// Removed unused import
+import React from 'react';
 import { Check, Crown, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
-// Removed unused import
+import { useAuth } from '../components/auth/AuthProvider';
+import StripeCheckout from '../components/stripe/StripeCheckout';
+import { stripeProducts } from '../stripe-config';
+
 const PricingPage = () => {
+  const { user } = useAuth();
+
   const dealerPlans = [
     {
       name: 'Starter',
@@ -71,7 +76,6 @@ const PricingPage = () => {
     },
   ];
 
-
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* Header */}
@@ -88,6 +92,73 @@ const PricingPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Stripe Products Section */}
+      {stripeProducts.length > 0 && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Available Subscriptions</h2>
+            <p className="text-xl text-gray-600">Get started with our premium features</p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-16">
+            {stripeProducts.map((product) => (
+              <div
+                key={product.priceId}
+                className="bg-white rounded-2xl shadow-soft p-8 relative ring-2 ring-primary-500 scale-105"
+              >
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-primary-500 text-white px-4 py-2 rounded-full text-sm font-medium">
+                    Featured
+                  </div>
+                </div>
+
+                <div className="text-center mb-8">
+                  <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Crown className="h-8 w-8 text-primary-600" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{product.name}</h3>
+                  <p className="text-gray-600 mb-4">{product.description}</p>
+                  <div className="text-4xl font-bold text-primary-600 mb-2">
+                    £250.00
+                    <span className="text-lg text-gray-600 font-normal">/month</span>
+                  </div>
+                </div>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start space-x-3">
+                    <Check className="h-5 w-5 text-success-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-gray-700">Premium marketplace access</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <Check className="h-5 w-5 text-success-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-gray-700">Advanced dealer tools</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <Check className="h-5 w-5 text-success-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-gray-700">Priority customer support</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <Check className="h-5 w-5 text-success-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-gray-700">Enhanced analytics</span>
+                  </li>
+                </ul>
+
+                {user ? (
+                  <StripeCheckout product={product} />
+                ) : (
+                  <Link
+                    to="/auth/dealer/login"
+                    className="w-full bg-primary-600 text-white py-3 px-6 rounded-lg font-semibold text-center block hover:bg-primary-700 transition-colors duration-200"
+                  >
+                    Sign In to Subscribe
+                  </Link>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Dealer Plans */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -137,14 +208,14 @@ const PricingPage = () => {
               </ul>
 
               <Link
-                to="/dealer-dashboard"
+                to={user ? "/dealer-dashboard" : "/auth/dealer/login"}
                 className={`w-full py-3 px-6 rounded-lg font-semibold text-center block transition-colors duration-200 ${
                   plan.popular
                     ? 'bg-primary-600 text-white hover:bg-primary-700'
                     : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
                 }`}
               >
-                Start Free Trial
+                {user ? 'Go to Dashboard' : 'Start Free Trial'}
               </Link>
             </div>
           ))}
@@ -181,10 +252,10 @@ const PricingPage = () => {
               </ul>
 
               <Link
-                to="/user-dashboard"
+                to={user ? "/user-dashboard" : "/auth/user/login"}
                 className="w-full bg-primary-600 text-white py-3 px-6 rounded-lg font-semibold text-center block hover:bg-primary-700 transition-colors duration-200"
               >
-                List Your Car
+                {user ? 'List Your Car' : 'Get Started'}
               </Link>
             </div>
           ))}
