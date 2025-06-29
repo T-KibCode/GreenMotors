@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../auth/AuthProvider';
 import { stripeProducts, StripeProduct } from '../../stripe-config';
+import { supabase } from '../../lib/supabase';
 import { CreditCard, Loader2 } from 'lucide-react';
 
 interface StripeCheckoutProps {
